@@ -1,68 +1,103 @@
 body {
-  background-color: #f2ede8;
-  color: #3b3221;
+  background: linear-gradient(to bottom right, #1a8cff, #005ce6);
+  color: #fff;
   font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+}
+
+.text-container {
+  padding: 20px;
 }
 
 .board {
   margin-top: 50px;
   display: grid;
-  grid-template-columns: repeat(3, 120px);
-  grid-template-rows: repeat(3, 120px);
-  gap: 20px;
+  grid-template-columns: repeat(3, 140px);
+  grid-template-rows: repeat(3, 140px);
+  gap: 10px;
   padding: 20px;
   border-radius: 10px;
   justify-content: center;
   align-content: center;
-  background-color: #d1ccc0;
+  background-color: #66ccff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .cell {
-  margin-top: 15px;
-  background-color: #a3c2c2;
-  width: 120px;
-  height: 120px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  width: 140px;
+  height: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   font-size: 48px;
-  color: #3b3221;
+  color: #fff;
   position: relative;
-}
-
-.cell:hover {
-  background-color: #7a9c9f;
+  transition: background-color 0.3s, transform 0.3s;
   cursor: pointer;
 }
 
-.text-container {
-  padding: 20px;
-  text-align: center;
+.cell:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.playerTurn,
-.winning-txt {
+.cell[data-content='']::before,
+.cell[data-content='']::after {
+  display: none;
+}
+
+.cell::before,
+.cell::after {
+  content: attr(data-content);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+  color: #fff;
+}
+
+.cell[data-content='X']::before {
+  content: "X";
+}
+
+.cell[data-content='O']::before {
+  content: "O";
+}
+
+.winning-txt,
+.player-turn {
   margin-top: 20px;
   font-size: larger;
   font-style: bold;
-  font-family: fantasy;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
 }
 
-.winning-txt {
-  margin-top: 5px;
+.player-turn:hover,
+.winning-txt:hover {
+  transform: scale(1.1);
 }
 
 #resetBtn {
   margin-top: 20px;
-  background-color: #bf9663;
+  background-color: #3366ff;
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -73,35 +108,26 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition-duration: 0.4s;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-10px);
+  }
+  100% {
+      transform: translateY(0);
+  }
 }
 
 #resetBtn:hover {
-  background-color: #8c6b43;
+  background-color: #1a53ff;
 }
 
-.cell::before,
-.cell::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.cell::before {
-  content: "X";
-}
-
-.cell::after {
-  content: "O";
-}
-
-.cell::before,
-.cell::after {
-  opacity: 0;
-}
-
-.cell.clicked::before,
-.cell.clicked::after {
-  opacity: 1;
+.cell[data-content='X'],
+.cell[data-content='O'] {
+  cursor: not-allowed;
 }
