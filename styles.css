@@ -50,9 +50,10 @@ body {
 
 .playerTurn,
 .winning-txt {
-  font-size: large;
+  margin-top: 20px;
+  font-size: larger;
   font-style: bold;
-  margin-bottom: 10px;
+  font-family: fantasy;
 }
 
 .winning-txt {
